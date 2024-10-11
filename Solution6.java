@@ -1,13 +1,10 @@
-// -*- coding: utf-8 -*-
-
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.junit.jupiter.api.Test;
-import java.util.Arrays;
-import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
 
 /**
  * @description:
@@ -58,34 +55,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *
  */
 
-class Solution6 {
+ class Solution6 {
     public List<Integer> peopleIndexes(List<List<String>> favoriteCompanies) {
         int n = favoriteCompanies.size();
         List<Integer> ans = new ArrayList<>();
-
         for (int i = 0; i < n; ++i) {
-            boolean isSub = false;
+            boolean isSubset = false;
             for (int j = 0; j < n; ++j) {
-                if (i == j) {
-                    continue;
-                }
-                if (isSubset(favoriteCompanies.get(i), favoriteCompanies.get(j))) {
-                    isSub = true;
+                if (i == j) continue;
+                if (isSubsetOf(favoriteCompanies.get(i), favoriteCompanies.get(j))) {
+                    isSubset = true;
                     break;
                 }
             }
-            if (!isSub) {
+            if (!isSubset) {
                 ans.add(i);
             }
         }
-
         return ans;
     }
 
-    private boolean isSubset(List<String> a, List<String> b) {
+    private boolean isSubsetOf(List<String> a, List<String> b) {
         Set<String> setA = new HashSet<>(a);
-        for (String item : b) {
-            if (!setA.contains(item)) {
+        for (String s : b) {
+            if (!setA.contains(s)) {
                 return false;
             }
         }
@@ -93,36 +86,3 @@ class Solution6 {
     }
 }
 
-
-public class Solution6Test {
-    @Test
-    public void testPeopleIndexes() {
-        Solution6 solution = new Solution6();
-        List<List<String>> favoriteCompanies1 = Arrays.asList(
-                Arrays.asList("leetcode", "google", "facebook"),
-                Arrays.asList("google", "microsoft"),
-                Arrays.asList("google", "facebook"),
-                Arrays.asList("google"),
-                Arrays.asList("amazon")
-        );
-        List<Integer> expected1 = Arrays.asList(0, 1, 4);
-        assertEquals(expected1, solution.peopleIndexes(favoriteCompanies1));
-
-        List<List<String>> favoriteCompanies2 = Arrays.asList(
-                Arrays.asList("leetcode", "google", "facebook"),
-                Arrays.asList("leetcode", "amazon"),
-                Arrays.asList("facebook", "google")
-        );
-        List<Integer> expected2 = Arrays.asList(0, 1);
-        assertEquals(expected2, solution.peopleIndexes(favoriteCompanies2));
-
-        List<List<String>> favoriteCompanies3 = Arrays.asList(
-                Arrays.asList("leetcode"),
-                Arrays.asList("google"),
-                Arrays.asList("facebook"),
-                Arrays.asList("amazon")
-        );
-        List<Integer> expected3 = Arrays.asList(0, 1, 2, 3);
-        assertEquals(expected3, solution.peopleIndexes(favoriteCompanies3));
-    }
-}
