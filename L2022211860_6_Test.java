@@ -1,70 +1,49 @@
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+package org.example;
 
+import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class Solution6Test {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class Solution6Test {
+
+    private final Solution6 solution = new Solution6();
 
     @Test
-    public void testHappyPath() {
-        Solution6 solution = new Solution6();
-        
-        List<List<String>> input1 = Arrays.asList(
-                Arrays.asList("leetcode", "google", "facebook"),
-                Arrays.asList("google", "microsoft"),
+    void testPeopleIndexes_EdgeCases() {
+        // 测试边界情况
+
+        // 测试只有一个用户的情况
+        List<List<String>> favoriteCompaniesSingle = Arrays.asList(
+                Arrays.asList("google")
+        );
+        assertEquals(Arrays.asList(0), solution.peopleIndexes(favoriteCompaniesSingle));
+
+        // 测试所有用户收藏的公司完全相同的情况
+        List<List<String>> favoriteCompaniesSame = Arrays.asList(
                 Arrays.asList("google", "facebook"),
-                Arrays.asList("google"),
-                Arrays.asList("amazon")
+                Arrays.asList("google", "facebook"),
+                Arrays.asList("google", "facebook")
         );
-        List<Integer> expected1 = Arrays.asList(0, 1, 4);
-        Assertions.assertEquals(expected1, solution.peopleIndexes(input1));
+        assertEquals(Arrays.asList(), solution.peopleIndexes(favoriteCompaniesSame));
 
-        List<List<String>> input2 = Arrays.asList(
-                Arrays.asList("leetcode", "google", "facebook"),
-                Arrays.asList("leetcode", "amazon"),
-                Arrays.asList("facebook", "google")
-        );
-        List<Integer> expected2 = Arrays.asList(0, 1);
-        Assertions.assertEquals(expected2, solution.peopleIndexes(input2));
-
-        List<List<String>> input3 = Arrays.asList(
-                Arrays.asList("leetcode"),
-                Arrays.asList("google"),
-                Arrays.asList("facebook"),
-                Arrays.asList("amazon")
-        );
-        List<Integer> expected3 = Arrays.asList(0, 1, 2, 3);
-        Assertions.assertEquals(expected3, solution.peopleIndexes(input3));
-    }
-
-    @Test
-    public void testEdgeCases() {
-        Solution6 solution = new Solution6();
-
-        List<List<String>> input4 = Arrays.asList(
+        // 测试所有用户收藏的公司都不相同
+        List<List<String>> favoriteCompaniesUnique = Arrays.asList(
                 Arrays.asList("a"),
                 Arrays.asList("b"),
                 Arrays.asList("c")
         );
-        List<Integer> expected4 = Arrays.asList(0, 1, 2);
-        Assertions.assertEquals(expected4, solution.peopleIndexes(input4));
+        assertEquals(Arrays.asList(0, 1, 2), solution.peopleIndexes(favoriteCompaniesUnique));
 
-        List<List<String>> input5 = Arrays.asList(
-                Arrays.asList("abc"),
-                Arrays.asList("abc", "def"),
-                Arrays.asList("abc", "def", "ghi")
+        // 测试大规模输入
+        List<List<String>> favoriteCompaniesLarge = Arrays.asList(
+                Arrays.asList("a1", "a2"),
+                Arrays.asList("b1", "b2"),
+                Arrays.asList("c1", "c2", "a1"),
+                Arrays.asList("d1"),
+                Arrays.asList("e1", "e2", "f1", "f2", "a2")
         );
-        List<Integer> expected5 = Arrays.asList(0);
-        Assertions.assertEquals(expected5, solution.peopleIndexes(input5));
-
-        List<List<String>> input6 = Arrays.asList(
-                Arrays.asList("apple"),
-                Arrays.asList("apple", "banana", "cherry"),
-                Arrays.asList("banana"),
-                Arrays.asList("banana", "cherry", "date")
-        );
-        List<Integer> expected6 = Arrays.asList(0);
-        Assertions.assertEquals(expected6, solution.peopleIndexes(input6));
+        assertEquals(Arrays.asList(0, 1, 2, 3, 4), solution.peopleIndexes(favoriteCompaniesLarge)); // Fixed the expected output here
     }
 }

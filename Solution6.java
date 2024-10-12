@@ -1,4 +1,5 @@
-import java.util.Arrays;
+package org.example;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -55,7 +56,7 @@ import java.util.Set;
  *
  */
 
- class Solution6 {
+public class Solution6 {
     public List<Integer> peopleIndexes(List<List<String>> favoriteCompanies) {
         int n = favoriteCompanies.size();
         List<Integer> ans = new ArrayList<>();
@@ -76,13 +77,9 @@ import java.util.Set;
     }
 
     private boolean isSubsetOf(List<String> a, List<String> b) {
+        // 检查 a 是否是 b 的子集
         Set<String> setA = new HashSet<>(a);
-        for (String s : b) {
-            if (!setA.contains(s)) {
-                return false;
-            }
-        }
-        return true;
+        Set<String> setB = new HashSet<>(b);
+        return setB.containsAll(setA);
     }
 }
-
